@@ -1,21 +1,24 @@
 # Zeta Zeros (Critical Line Mix)
 
-The zeros of the Riemann zeta function, played as techno, one after another, forever. Every lead note is a real zero, found in the browser just before it plays. It never loops. The maths decides when the drop hits.
+What the Riemann zeta function sounds like as techno. Live at https://heheok.github.io/the-riemann-zeros/
 
-## How it works
+## What is this?
 
-- The spiral traces ζ(½ + it) as t climbs. Each pass through the centre is a zero.
-- Each lead note is one zero, in order, starting at 14.1347.
-- The normalized gap to the next zero, δ = Δγ · ln(γ/2π) / 2π, sets the melody step (wider than average steps up, tighter steps down) and the note length.
-- When max |ζ(½ + it)| between two zeros is in the top 8% of the last 250 loops, it arms a build-up and drop.
-- The mood buttons change the five-note scale. The zeros, rhythm and drops stay the same.
+The zeta function has special inputs where its answer is exactly zero. This page finds those zeros one at a time, in your browser, and plays a note for each. It never loops, because there are infinitely many of them.
 
-Zeros are found from sign changes of the Hardy Z-function, using Euler–Maclaurin summation below t = 200 and the Riemann–Siegel formula above.
+- **The swirl** is the function's answer drawn as a moving dot. Each time it crosses the middle, that's a zero and you hear a note.
+- **The melody** comes from the spacing. A longer wait than usual for the next zero makes the tune step up and hold. A shorter wait makes it step down and hurry.
+- **The drops** happen when the curve swings unusually far out between two zeros (bigger than 92% of the last 250 loops).
+- **The mood buttons** swap the five notes the tune is allowed to use. The zeros stay the same.
 
-## Honest label
+## For the nerds
 
-This is a sonification of the zeros. It is not a proof of anything and is not affiliated with any claimed proof of the Riemann hypothesis. The scale, drums, tempo and the gap-to-note rule are artistic choices.
+Zeros are found from sign changes of the Hardy Z-function: Euler–Maclaurin summation below t = 200, Riemann–Siegel above. The melody step is round(4(δ − 1)) clamped to ±3, where δ = Δγ · ln(γ/2π) / 2π is the normalized gap. The first 10,000 zeros match published tables.
+
+## Small print
+
+The zeros are real maths. The drums, scale, tempo and the gap-to-note rule are choices made so it sounds good. It doesn't prove anything and isn't connected to anyone's proof.
 
 ## Run it
 
-Open `index.html` in a browser. No build step, no dependencies. All sound is synthesized with the Web Audio API.
+Open `index.html`. One file, no dependencies, all sound made with the Web Audio API.

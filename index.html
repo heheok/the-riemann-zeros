@@ -49,7 +49,7 @@ a{color:var(--text-accent)}
 <main>
   <p class="kicker">A number theory rave</p>
   <h1>Zeta Zeros <span>(Critical Line Mix)</span></h1>
-  <p class="sub">The zeros of the Riemann zeta function, played as techno, one after another, forever. Every note is a real zero. The maths decides when the drop hits.</p>
+  <p class="sub">This is what one of the most famous functions in maths sounds like as techno. Press play. It never ends, because the maths doesn't either.</p>
 
   <div class="player">
     <div class="row">
@@ -69,28 +69,38 @@ a{color:var(--text-accent)}
     <div class="grid">
       <div id="sw" style="min-width:0;"><canvas id="sc" role="img" aria-label="Zeta spiral whose curve passes through the centre each time a note plays">The zeta spiral, hitting the centre on every note.</canvas></div>
       <div class="formulas">
-        <div>The machine<div class="f"><i>ζ</i>(<i>s</i>) = Σ 1/<i>n</i><sup><i>s</i></sup> = ∏ 1/(1 − <i>p</i><sup>−<i>s</i></sup>)</div></div>
-        <div>Zero now playing<div class="f"><i>ρ</i><sub id="fn">n</sub> = ½ + <i>i</i> · <span id="fg">γ</span></div></div>
-        <div>Gap sets the melody step<div class="f"><i>δ</i> = Δ<i>γ</i> · ln(<i>γ</i>/2π) / 2π = <span id="fd">–</span></div><div id="fs" style="margin-top:2px;">–</div></div>
-        <div>Loop size arms the drop<div class="f">max |<i>ζ</i>(½ + <i>it</i>)| = <span id="fp">–</span></div><div id="ft" style="margin-top:2px;">–</div></div>
+        <div>The zeta function<div class="f"><i>ζ</i>(<i>s</i>) = Σ 1/<i>n</i><sup><i>s</i></sup> = ∏ 1/(1 − <i>p</i><sup>−<i>s</i></sup>)</div></div>
+        <div>The zero playing right now<div class="f"><i>ρ</i><sub id="fn">n</sub> = ½ + <i>i</i> · <span id="fg">γ</span></div></div>
+        <div>Wait until the next zero (1 = normal)<div class="f"><i>δ</i> = Δ<i>γ</i> · ln(<i>γ</i>/2π) / 2π = <span id="fd">–</span></div><div id="fs" style="margin-top:2px;">–</div></div>
+        <div>Size of the current loop<div class="f">max |<i>ζ</i>(½ + <i>it</i>)| = <span id="fp">–</span></div><div id="ft" style="margin-top:2px;">–</div></div>
       </div>
     </div>
     <div id="xw" style="width:100%;"><canvas id="xc" role="img" aria-label="Scrolling sheet music of the lead line, one note per zeta zero">Sheet music scrolling right to left, one note per zero.</canvas></div>
   </div>
 
-  <h2>What am I looking at?</h2>
-  <ul>
-    <li><b>The spiral</b> is the Riemann zeta function traced along its critical line. Each time the curve passes through the centre, the function equals zero. Those points are the famous zeros.</li>
-    <li><b>Each lead note is one zero</b>, in order, starting with the first at height 14.1347. It never loops: there are infinitely many zeros, and each one is found in your browser just before it plays.</li>
-    <li><b>The melody</b> follows the gaps between zeros. A longer wait than average steps the tune up and holds the note; a shorter wait steps it down and makes it quick.</li>
-    <li><b>The drops</b> are triggered when the curve swings unusually far from the centre between two zeros. Watch for "Big loop" on the spiral: the build-up follows.</li>
-    <li><b>Mood</b> changes the scale the melody lands on. The zeros, the rhythm and the drops stay exactly the same.</li>
-  </ul>
+  <h2>What's going on here?</h2>
+  <p>There's a famous function in maths called the zeta function. You give it a number and it hands you a number back. For a few very special inputs it hands back exactly zero. Those inputs are called the zeros, and mathematicians have been obsessed with them since 1859.</p>
+  <p>This page finds those zeros one at a time and plays a note for each one. Nobody wrote the melody. It comes from where the zeros are.</p>
 
-  <h2>Why zeros?</h2>
-  <p>The zeros of the zeta function encode how the prime numbers are distributed. The Riemann hypothesis, posed in 1859, says every one of these zeros sits on a single line. This page walks up that line and plays what it finds.</p>
+  <h2>The swirly thing</h2>
+  <p>The curve in the top left is the function's answer, drawn as a moving dot. It loops all over the place, but it keeps coming back through the exact middle. Every time it crosses the middle, that's a zero, and that's when you hear a note.</p>
 
-  <p class="note">This is a sonification of the zeros, not a proof of anything and not affiliated with any claimed proof. The zeros and their spacing are real mathematics. The scale, drums, tempo and the rule that turns a gap into a note are artistic choices. Zeros are computed with the Euler–Maclaurin and Riemann–Siegel formulas. Made in a conversation with Claude.</p>
+  <h2>How a zero turns into a note</h2>
+  <p>The zeros aren't evenly spaced. Sometimes the next one shows up quickly, sometimes you have to wait. If the wait is longer than usual, the tune steps up and the note gets held. If it's shorter than usual, the tune steps down and the note is quick. So the melody is really the spacing of the zeros, turned into sound.</p>
+
+  <h2>Where the drops come from</h2>
+  <p>Between two zeros the curve wanders off and comes back. Usually that's a small loop. Once in a while it swings way out. When that happens you'll see "Big loop" appear, and a bit later the kick drum cuts out, the tension builds for four bars, and the drop hits. We didn't pick when that happens. The function did.</p>
+
+  <h2>The mood buttons</h2>
+  <p>These change which notes the tune is allowed to use, like switching a song from a sad key to a happy one. The zeros stay the same, so you get the same tune shape in a different outfit. Try Evil.</p>
+
+  <h2>The numbers in the box</h2>
+  <p>That's the actual maths, live: which zero is playing, how long the wait for the next one is compared to normal, and how big the current loop is. You don't need to follow the formulas to enjoy the track. They're there so you can see nothing is faked.</p>
+
+  <h2>Why does anyone care about these zeros?</h2>
+  <p>Because they secretly run the prime numbers. Primes (2, 3, 5, 7, 11 and so on) look like they pop up at random, but the positions of these zeros decide exactly where they land. The Riemann hypothesis is a guess from 1859 that every single zero sits on one straight line. People spent 167 years trying to prove it. This page walks up that line and plays whatever it finds, and since there are infinitely many zeros, it never has to stop.</p>
+
+  <p class="note">The small print: the zeros and their spacing are real maths, worked out in your browser while you listen. The drums, the scale, the tempo and the rule for turning a wait into a note are choices we made so it would sound good. Someone else could take the same zeros and make a completely different track. This page doesn't prove anything, and it has nothing to do with anyone's proof. Made in a conversation with Claude.</p>
 </main>
 <script>
 (function(){
@@ -198,7 +208,7 @@ while(queue.length&&queue[0].t<=now){const e=queue.shift();
 if(e.k){kickAt=pn;continue;}
 if(e.sec){vmode=e.sec;$('xm').textContent=NAME[e.sec];$('xb').textContent=Math.round(15/e.e);continue;}
 if(e.d){flashAt=pn;$('xd').textContent=e.n;}
-if(e.z){cur=e;zeroAt=pn;$('fn').textContent=e.n;$('fg').textContent=e.z.toFixed(4);$('fd').textContent=e.dl.toFixed(2);$('fs').textContent=(e.dl>1?'Wider than average':'Tighter than average')+', step '+(e.sd>0?'+':'')+e.sd;$('fp').textContent=e.pk.toFixed(2);const armed=e.pk>P92;$('ft').textContent=armed?'Above '+P92.toFixed(2)+', drop armed':'Needs '+P92.toFixed(2)+' to arm a drop';$('ft').style.color=armed?'var(--text-danger)':'';}
+if(e.z){cur=e;zeroAt=pn;$('fn').textContent=e.n;$('fg').textContent=e.z.toFixed(4);$('fd').textContent=e.dl.toFixed(2);$('fs').textContent=e.sd>0?'Longer wait than usual, tune goes up '+e.sd:e.sd<0?'Shorter wait than usual, tune goes down '+(-e.sd):'About normal, same note again';$('fp').textContent=e.pk.toFixed(2);const armed=e.pk>P92;$('ft').textContent=armed?'Over '+P92.toFixed(2)+'. Drop incoming':'A drop needs '+P92.toFixed(2)+' or more';$('ft').style.color=armed?'var(--text-danger)':'';}
 e.w=pn;shown.push(e);if(shown.length>200)shown.shift();}}
 spiral(pn,now);
 ctx.clearRect(0,0,W,H);
