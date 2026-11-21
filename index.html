@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Zeta Zeros (Critical Line Mix)</title>
-<meta name="description" content="The first 282 zeros of the Riemann zeta function, played as techno. Every note is a real zero. The maths decides when the drop hits.">
+<meta name="description" content="The zeros of the Riemann zeta function, played as techno, one after another, forever. Every note is a real zero. The maths decides when the drop hits.">
 <meta property="og:title" content="Zeta Zeros (Critical Line Mix)">
 <meta property="og:description" content="The Riemann zeros, played as techno. Every note is a real zero. The maths decides when the drop hits.">
 <style>
@@ -49,7 +49,7 @@ a{color:var(--text-accent)}
 <main>
   <p class="kicker">A number theory rave</p>
   <h1>Zeta Zeros <span>(Critical Line Mix)</span></h1>
-  <p class="sub">The first 282 zeros of the Riemann zeta function, played as techno. Every note is a real zero. The maths decides when the drop hits.</p>
+  <p class="sub">The zeros of the Riemann zeta function, played as techno, one after another, forever. Every note is a real zero. The maths decides when the drop hits.</p>
 
   <div class="player">
     <div class="row">
@@ -81,7 +81,7 @@ a{color:var(--text-accent)}
   <h2>What am I looking at?</h2>
   <ul>
     <li><b>The spiral</b> is the Riemann zeta function traced along its critical line. Each time the curve passes through the centre, the function equals zero. Those points are the famous zeros.</li>
-    <li><b>Each lead note is one zero</b>, in order, starting with the first at height 14.1347. They are computed live in your browser.</li>
+    <li><b>Each lead note is one zero</b>, in order, starting with the first at height 14.1347. It never loops: there are infinitely many zeros, and each one is found in your browser just before it plays.</li>
     <li><b>The melody</b> follows the gaps between zeros. A longer wait than average steps the tune up and holds the note; a shorter wait steps it down and makes it quick.</li>
     <li><b>The drops</b> are triggered when the curve swings unusually far from the centre between two zeros. Watch for "Big loop" on the spiral: the build-up follows.</li>
     <li><b>Mood</b> changes the scale the melody lands on. The zeros, the rhythm and the drops stay exactly the same.</li>
@@ -112,15 +112,18 @@ document.querySelectorAll('.md').forEach(function(b){b.onclick=function(){setMoo
 const N=80,LN=[],SQ=[];for(let n=1;n<=N;n++){LN.push(Math.log(n));SQ.push(1/Math.sqrt(n));}
 const lnN=Math.log(N),rN=Math.sqrt(N),b=1/rN,TAU=2*Math.PI;
 function theta(t){return t/2*Math.log(t/TAU)-t/2-Math.PI/8+1/(48*t)+7/(5760*t*t*t);}
-function Z(t){if(t>=200){const th=theta(t),u=Math.sqrt(t/TAU),M=Math.floor(u);let p=u-M,z=0;for(let n=1;n<=M;n++)z+=SQ[n-1]*Math.cos(th-t*LN[n-1]);z*=2;let cd=Math.cos(TAU*p);if(Math.abs(cd)<1e-7){p+=1e-6;cd=Math.cos(TAU*p);}return z+((M%2)?1:-1)*Math.pow(t/TAU,-0.25)*Math.cos(TAU*(p*p-p-1/16))/cd;}
+function Z(t){if(t>=200){const th=theta(t),u=Math.sqrt(t/TAU),M=Math.floor(u);let p=u-M,z=0;while(LN.length<M){const n=LN.length+1;LN.push(Math.log(n));SQ.push(1/Math.sqrt(n));}for(let n=1;n<=M;n++)z+=SQ[n-1]*Math.cos(th-t*LN[n-1]);z*=2;let cd=Math.cos(TAU*p);if(Math.abs(cd)<1e-7){p+=1e-6;cd=Math.cos(TAU*p);}return z+((M%2)?1:-1)*Math.pow(t/TAU,-0.25)*Math.cos(TAU*(p*p-p-1/16))/cd;}
 let re=0,im=0;for(let k=0;k<N-1;k++){const th=t*LN[k];re+=SQ[k]*Math.cos(th);im-=SQ[k]*Math.sin(th);}
 const th=t*lnN,c=Math.cos(th),s=Math.sin(th),ar=rN*c,ai=-rN*s,den=0.25+t*t;
 re+=(-0.5*ar+ai*t)/den;im+=(-0.5*ai-ar*t)/den;re+=0.5*b*c;im-=0.5*b*s;const q=b/N/12;re+=q*(0.5*c+t*s);im+=q*(t*c-0.5*s);
 const h=theta(t);return re*Math.cos(h)-im*Math.sin(h);}
 function zc(t){const z=Z(t),h=theta(t);return [z*Math.cos(h),-z*Math.sin(h)];}
-const zeros=[];(function(){let a=10,za=Z(a);for(let t=10.05;t<520;t+=0.05){const zb=Z(t);if((za<0)!==(zb<0)){let lo=a,hi=t,zl=za;for(let i=0;i<30;i++){const m=(lo+hi)/2,zm=Z(m);if((zm<0)===(zl<0)){lo=m;zl=zm;}else hi=m;}zeros.push((lo+hi)/2);}a=t;za=zb;}})();
-const NZ=zeros.length-1,peak=[];for(let i=0;i<NZ;i++){let m=0;for(let k=1;k<=6;k++){const v=Math.abs(Z(zeros[i]+(zeros[i+1]-zeros[i])*k/7));if(v>m)m=v;}peak.push(m);}
-const P92=peak.slice().sort(function(x,y){return x-y;})[Math.floor(NZ*0.92)];
+const zeros=[],peak=[];let scA=10,scZ=Z(10),P92=1;
+function pk(i){let m=0;for(let k=1;k<=6;k++){const v=Math.abs(Z(zeros[i]+(zeros[i+1]-zeros[i])*k/7));if(v>m)m=v;}return m;}
+function findNext(){for(;;){const h=Math.min(0.05,TAU/Math.log(scA/TAU)/12),t=scA+h,zb=Z(t),hit=(scZ<0)!==(zb<0);if(hit){let lo=scA,hi=t,zl=scZ;for(let i=0;i<30;i++){const m=(lo+hi)/2,zm=Z(m);if((zm<0)===(zl<0)){lo=m;zl=zm;}else hi=m;}zeros.push((lo+hi)/2);}scA=t;scZ=zb;if(hit)return;}}
+function need(i){while(zeros.length<=i+1)findNext();while(peak.length<=i)peak.push(pk(peak.length));}
+function retune(){const w=peak.slice(-250).sort(function(x,y){return x-y;});P92=w[Math.floor(w.length*0.92)];}
+need(280);retune();
 const freq=d=>220*Math.pow(2,(MOODS[mood].s[d%5]+12*Math.floor(d/5))/12),sp=d=>-4+MOODS[mood].d[d%5]+7*Math.floor(d/5);
 let ac=null,master=null,duck=null,drums=null,rv=null,nbuf=null,shS=null,shH=null;
 let playing=false,idx=0,pos=5,T=0,step=0,bar=0,gstep=0,mel=0,mode='main',mbar=0,pending=false,drops=0,queue=[],shown=[],kickAt=-1e9,flashAt=-1e9,zeroAt=-1e9,vmode='',cur=null,trail=[],lastT=0;
@@ -153,12 +156,12 @@ if(mode==='main'){if(step%4===0)kick(T,false,E);if(step%4===2){hat(T,0.13,0.09);
 else if(mode==='drop'){if(step%4===0)kick(T,true,E);else bassn(root*(step%4===3?2:1),T,E*0.9);if(step%4===2)hat(T,0.15,0.1);else hat(T,0.07,0.03);if(step===4||step===12)clap(T,0.38);}
 else if(mode==='build'&&!quiet){const pr=(mbar*16+step)/64;if(mbar<2&&step%4===2)hat(T,0.08,0.05);if(mbar===2&&step%2===0)nz(T,'highpass',1300,0.1+0.14*pr,0.07);if(mbar===3)nz(T,'highpass',1300,0.12+0.24*pr,0.05);}
 else if(mode==='down'){if(step%4===2)hat(T,0.05,0.06);if(mbar===1&&step===8)riser(T,E*8);if(mbar===1&&(step===12||step===14||step===15))nz(T,'highpass',1300,0.22,0.06);}
-if(gstep>=mel){const g0=zeros[idx],g1=zeros[idx+1],dl=(g1-g0)*Math.log(g0/TAU)/TAU,sd=Math.max(-3,Math.min(3,Math.round((dl-1)*4)));
+if(gstep>=mel){need(idx);const g0=zeros[idx],g1=zeros[idx+1],dl=(g1-g0)*Math.log(g0/TAU)/TAU,sd=Math.max(-3,Math.min(3,Math.round((dl-1)*4)));
 pos+=sd;if(pos<0)pos=-pos;if(pos>12)pos=24-pos;const len=dl<0.75?1:dl<1.35?2:4;
 if(!quiet){const pr=mode==='build'?(mbar*16+step)/64:(mbar*16+step)/32,cut=mode==='drop'?3600:mode==='main'?1300:mode==='build'?300+2600*pr:2400-1900*pr;
 lead(mode==='drop'?freq(pos):freq(pos)/2,T,len*E*0.9,cut);}
 queue.push({t:T,p:pos,spv:sp(pos),acc:MOODS[mood].a[pos%5],len:len,dur:len*E,z:g0,z1:g1,n:idx+1,dl:dl,sd:sd,pk:peak[idx],q:quiet});
-if(mode==='main'&&peak[idx]>P92)pending=true;mel=gstep+len;idx++;if(idx>=NZ)idx=0;}
+if(mode==='main'&&peak[idx]>P92)pending=true;mel=gstep+len;idx++;if(idx%20===0)retune();}
 T+=E;step++;gstep++;if(step>=16){step=0;bar++;mbar++;}}}
 function start(){try{const AC=window.AudioContext||window.webkitAudioContext;if(!ac)ac=new AC();if(ac.state==='suspended')ac.resume();}catch(e){ac=null;}
 if(!ac){$('xm').textContent='Sound is blocked in this browser';return;}
