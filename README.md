@@ -9,7 +9,6 @@ The zeta function has special inputs where its answer is exactly zero. This page
 - **The swirl** is the function's answer drawn as a moving dot. Each time it crosses the middle, that's a zero and you hear a note.
 - **The melody** comes from the spacing. A longer wait than usual for the next zero makes the tune step up and hold. A shorter wait makes it step down and hurry.
 - **The drops** happen when the curve swings unusually far out between two zeros (bigger than 92% of the last 250 loops).
-- **The mood buttons** swap the five notes the tune is allowed to use. The zeros stay the same.
 
 ## For the nerds
 

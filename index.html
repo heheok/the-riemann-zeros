@@ -11,38 +11,36 @@
 :root{
   --bg:#0d0d0f;--panel:#17171b;--line:#2a2a31;
   --text-primary:#f1efe8;--text-secondary:#a8a69d;
-  --accent:#ef9f27;--blue:#378add;--red:#e24b4a;
-  --bg-neutral:#17171b;--bg-accent:#3a2a0c;--text-accent:#f6c66f;--border-accent:#ef9f27;--text-danger:#ff7b7a;
+  --accent:#ef9f27;--bg-neutral:#17171b;--text-danger:#ff7b7a;
   --radius:10px;--font-voice:Georgia,"Times New Roman",serif;
   --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--text-primary);font-family:var(--sans);line-height:1.6}
-main{max-width:760px;margin:0 auto;padding:40px 20px 64px}
-h1{font-family:var(--font-voice);font-weight:400;font-size:clamp(34px,7vw,56px);line-height:1.05;margin:0 0 6px;letter-spacing:-0.01em}
+main{max-width:1120px;margin:0 auto;padding:36px 24px 72px}
+.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
+h1{font-family:var(--font-voice);font-weight:400;font-size:clamp(34px,6vw,60px);line-height:1.05;margin:0 0 8px;letter-spacing:-0.01em}
 h1 span{color:var(--accent)}
-.sub{font-size:18px;color:var(--text-secondary);margin:0 0 28px;max-width:56ch}
-.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
-h2{font-family:var(--font-voice);font-weight:400;font-size:24px;margin:44px 0 10px}
-p,li{color:var(--text-secondary);font-size:16px}
-li{margin:6px 0}
-b{color:var(--text-primary);font-weight:600}
-button{font:inherit;font-size:14px;color:var(--text-primary);background:transparent;border:1px solid #4a4a54;border-radius:var(--radius);padding:8px 14px;cursor:pointer}
-button:hover{background:#1e1e24}
-button:active{transform:scale(.98)}
-#xp{background:var(--accent);border-color:var(--accent);color:#1b1203;font-weight:600;padding:10px 22px;font-size:16px}
+.sub{font-size:18px;color:var(--text-secondary);margin:0 0 24px;max-width:60ch}
+h2{font-family:var(--font-voice);font-weight:400;font-size:23px;margin:0 0 8px}
+p{color:var(--text-secondary);font-size:16px;margin:0 0 12px}
+button{font:inherit;color:var(--text-primary);background:transparent;border:1px solid #4a4a54;border-radius:var(--radius);padding:8px 14px;cursor:pointer}
+button:active{transform:scale(.99)}
+#xp{width:100%;background:var(--accent);border-color:var(--accent);color:#1b1203;font-weight:600;padding:14px;font-size:18px}
 #xp:hover{background:#f6b144}
-.player{background:#111114;border:1px solid var(--line);border-radius:16px;padding:16px}
-.row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:0 0 12px}
-.stat{font-size:20px;font-weight:600}
-.lab{font-size:13px;color:var(--text-secondary)}
-.grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:12px;margin-bottom:10px}
-@media (max-width:640px){.grid{grid-template-columns:minmax(0,1fr)}}
-.formulas{background:var(--bg-neutral);border-radius:var(--radius);padding:12px 14px;font-size:12px;color:var(--text-secondary);display:flex;flex-direction:column;gap:9px;min-width:0}
-.f{font-family:var(--font-voice);font-size:15px;color:var(--text-primary);margin-top:2px}
+.player{background:#111114;border:1px solid var(--line);border-radius:18px;padding:18px}
+.grid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr);gap:18px;margin-bottom:14px}
+.side{display:flex;flex-direction:column;gap:14px;min-width:0}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tile{background:var(--panel);border-radius:var(--radius);padding:10px 12px;min-width:0}
+.lab{font-size:12px;color:var(--text-secondary);display:block}
+.stat{font-size:22px;font-weight:600;white-space:nowrap}
+.formulas{flex:1;background:var(--panel);border-radius:var(--radius);padding:16px;font-size:13px;color:var(--text-secondary);display:flex;flex-direction:column;justify-content:space-between;gap:12px;min-width:0}
+.f{font-family:var(--font-voice);font-size:18px;color:var(--text-primary);margin-top:3px}
 canvas{display:block}
-.note{font-size:14px;border-top:1px solid var(--line);margin-top:44px;padding-top:18px}
-a{color:var(--text-accent)}
+.explain{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 56px;margin-top:56px}
+.note{font-size:14px;border-top:1px solid var(--line);margin-top:48px;padding-top:18px;max-width:80ch}
+@media (max-width:860px){.grid{grid-template-columns:minmax(0,1fr)}.explain{grid-template-columns:minmax(0,1fr);gap:28px}}
 </style>
 </head>
 <body>
@@ -52,53 +50,53 @@ a{color:var(--text-accent)}
   <p class="sub">This is what one of the most famous functions in maths sounds like as techno. Press play. It never ends, because the maths doesn't either.</p>
 
   <div class="player">
-    <div class="row">
-      <button id="xp"><span id="xpl">Play</span></button>
-      <div><span id="xb" class="stat">–</span> <span class="lab">bpm</span></div>
-      <div><span class="lab">Drops</span> <span id="xd" class="stat" style="margin-left:4px;">0</span></div>
-      <span id="xm" style="font-size:16px;font-weight:600;"></span>
-    </div>
-    <div class="row" style="gap:8px;">
-      <span class="lab" style="font-size:14px;margin-right:4px;">Mood</span>
-      <button class="md" data-m="0" aria-pressed="true">Dark</button>
-      <button class="md" data-m="1" aria-pressed="false">Bright</button>
-      <button class="md" data-m="2" aria-pressed="false">Evil</button>
-      <button class="md" data-m="3" aria-pressed="false">Spacey</button>
-      <span id="mn" class="lab" style="margin-left:4px;"></span>
-    </div>
     <div class="grid">
       <div id="sw" style="min-width:0;"><canvas id="sc" role="img" aria-label="Zeta spiral whose curve passes through the centre each time a note plays">The zeta spiral, hitting the centre on every note.</canvas></div>
-      <div class="formulas">
-        <div>The zeta function<div class="f"><i>ζ</i>(<i>s</i>) = Σ 1/<i>n</i><sup><i>s</i></sup> = ∏ 1/(1 − <i>p</i><sup>−<i>s</i></sup>)</div></div>
-        <div>The zero playing right now<div class="f"><i>ρ</i><sub id="fn">n</sub> = ½ + <i>i</i> · <span id="fg">γ</span></div></div>
-        <div>Wait until the next zero (1 = normal)<div class="f"><i>δ</i> = Δ<i>γ</i> · ln(<i>γ</i>/2π) / 2π = <span id="fd">–</span></div><div id="fs" style="margin-top:2px;">–</div></div>
-        <div>Size of the current loop<div class="f">max |<i>ζ</i>(½ + <i>it</i>)| = <span id="fp">–</span></div><div id="ft" style="margin-top:2px;">–</div></div>
+      <div class="side">
+        <button id="xp"><span id="xpl">Play</span></button>
+        <div class="tiles">
+          <div class="tile"><span class="lab">Now</span><span id="xm" class="stat">Ready</span></div>
+          <div class="tile"><span class="lab">Tempo (bpm)</span><span id="xb" class="stat">–</span></div>
+          <div class="tile"><span class="lab">Drops so far</span><span id="xd" class="stat">0</span></div>
+        </div>
+        <div class="formulas">
+          <div>The zeta function<div class="f"><i>ζ</i>(<i>s</i>) = Σ 1/<i>n</i><sup><i>s</i></sup> = ∏ 1/(1 − <i>p</i><sup>−<i>s</i></sup>)</div></div>
+          <div>The zero playing right now<div class="f"><i>ρ</i><sub id="fn">n</sub> = ½ + <i>i</i> · <span id="fg">γ</span></div></div>
+          <div>Wait until the next zero (1 = normal)<div class="f"><i>δ</i> = Δ<i>γ</i> · ln(<i>γ</i>/2π) / 2π = <span id="fd">–</span></div><div id="fs" style="margin-top:3px;">–</div></div>
+          <div>Size of the current loop<div class="f">max |<i>ζ</i>(½ + <i>it</i>)| = <span id="fp">–</span></div><div id="ft" style="margin-top:3px;">–</div></div>
+        </div>
       </div>
     </div>
     <div id="xw" style="width:100%;"><canvas id="xc" role="img" aria-label="Scrolling sheet music of the lead line, one note per zeta zero">Sheet music scrolling right to left, one note per zero.</canvas></div>
   </div>
 
-  <h2>What's going on here?</h2>
-  <p>There's a famous function in maths called the zeta function. You give it a number and it hands you a number back. For a few very special inputs it hands back exactly zero. Those inputs are called the zeros, and mathematicians have been obsessed with them since 1859.</p>
-  <p>This page finds those zeros one at a time and plays a note for each one. Nobody wrote the melody. It comes from where the zeros are.</p>
-
-  <h2>The swirly thing</h2>
-  <p>The curve in the top left is the function's answer, drawn as a moving dot. It loops all over the place, but it keeps coming back through the exact middle. Every time it crosses the middle, that's a zero, and that's when you hear a note.</p>
-
-  <h2>How a zero turns into a note</h2>
-  <p>The zeros aren't evenly spaced. Sometimes the next one shows up quickly, sometimes you have to wait. If the wait is longer than usual, the tune steps up and the note gets held. If it's shorter than usual, the tune steps down and the note is quick. So the melody is really the spacing of the zeros, turned into sound.</p>
-
-  <h2>Where the drops come from</h2>
-  <p>Between two zeros the curve wanders off and comes back. Usually that's a small loop. Once in a while it swings way out. When that happens you'll see "Big loop" appear, and a bit later the kick drum cuts out, the tension builds for four bars, and the drop hits. We didn't pick when that happens. The function did.</p>
-
-  <h2>The mood buttons</h2>
-  <p>These change which notes the tune is allowed to use, like switching a song from a sad key to a happy one. The zeros stay the same, so you get the same tune shape in a different outfit. Try Evil.</p>
-
-  <h2>The numbers in the box</h2>
-  <p>That's the actual maths, live: which zero is playing, how long the wait for the next one is compared to normal, and how big the current loop is. You don't need to follow the formulas to enjoy the track. They're there so you can see nothing is faked.</p>
-
-  <h2>Why does anyone care about these zeros?</h2>
-  <p>Because they secretly run the prime numbers. Primes (2, 3, 5, 7, 11 and so on) look like they pop up at random, but the positions of these zeros decide exactly where they land. The Riemann hypothesis is a guess from 1859 that every single zero sits on one straight line. People spent 167 years trying to prove it. This page walks up that line and plays whatever it finds, and since there are infinitely many zeros, it never has to stop.</p>
+  <div class="explain">
+    <section>
+      <h2>What's going on here?</h2>
+      <p>There's a famous function in maths called the zeta function. You give it a number and it hands you a number back. For a few very special inputs it hands back exactly zero. Those inputs are called the zeros, and mathematicians have been obsessed with them since 1859.</p>
+      <p>This page finds those zeros one at a time and plays a note for each one. Nobody wrote the melody. It comes from where the zeros are.</p>
+    </section>
+    <section>
+      <h2>The swirly thing</h2>
+      <p>The big curve is the function's answer, drawn as a moving dot. It loops all over the place, but it keeps coming back through the exact middle. Every time it crosses the middle, that's a zero, and that's when you hear a note.</p>
+    </section>
+    <section>
+      <h2>How a zero turns into a note</h2>
+      <p>The zeros aren't evenly spaced. Sometimes the next one shows up quickly, sometimes you have to wait. If the wait is longer than usual, the tune steps up and the note gets held. If it's shorter than usual, the tune steps down and the note is quick. So the melody is really the spacing of the zeros, turned into sound.</p>
+    </section>
+    <section>
+      <h2>Where the drops come from</h2>
+      <p>Between two zeros the curve wanders off and comes back. Usually that's a small loop. Once in a while it swings way out. When that happens you'll see "Big loop" appear, and a bit later the kick drum cuts out, the tension builds for four bars, and the drop hits. We didn't pick when that happens. The function did.</p>
+    </section>
+    <section>
+      <h2>The numbers in the box</h2>
+      <p>That's the actual maths, live: which zero is playing, how long the wait for the next one is compared to normal, and how big the current loop is. You don't need to follow the formulas to enjoy the track. They're there so you can see nothing is faked.</p>
+    </section>
+    <section>
+      <h2>Why does anyone care about these zeros?</h2>
+      <p>Because they secretly run the prime numbers. Primes (2, 3, 5, 7, 11 and so on) look like they pop up at random, but the positions of these zeros decide exactly where they land. The Riemann hypothesis is a guess from 1859 that every single zero sits on one straight line. People spent 167 years trying to prove it. This page walks up that line and plays whatever it finds, and since there are infinitely many zeros, it never has to stop.</p>
+    </section>
+  </div>
 
   <p class="note">The small print: the zeros and their spacing are real maths, worked out in your browser while you listen. The drums, the scale, the tempo and the rule for turning a wait into a note are choices we made so it would sound good. Someone else could take the same zeros and make a completely different track. This page doesn't prove anything, and it has nothing to do with anyone's proof. Made in a conversation with Claude.</p>
 </main>
@@ -107,18 +105,11 @@ a{color:var(--text-accent)}
 const $=id=>document.getElementById(id);
 const cv=$('xc'),ctx=cv.getContext('2d'),s2=$('sc'),sx2=s2.getContext('2d'),btn=$('xp'),lbl=$('xpl');
 const cs=getComputedStyle(document.body),ink=cs.color,ff=cs.fontFamily,AMB='#EF9F27',RED='#E24B4A',BLU='#378ADD',GRY='#888780';
-let W=680,W2=340;const H=200,H2=236;
+let W=680,W2=340,H2=420;const H=220;
 function fit(c,w,h){const d=window.devicePixelRatio||1;c.width=w*d;c.height=h*d;c.style.width=w+'px';c.style.height=h+'px';c.getContext('2d').setTransform(d,0,0,d,0,0);}
-function size(){W=$('xw').clientWidth||680;W2=$('sw').clientWidth||340;fit(cv,W,H);fit(s2,W2,H2);}
+function size(){W=$('xw').clientWidth||680;W2=$('sw').clientWidth||340;H2=Math.round(Math.min(540,Math.max(280,W2*0.8)));fit(cv,W,H);fit(s2,W2,H2);}
 size();window.addEventListener('resize',size);
-const MOODS=[
-{n:'A C D E G',s:[0,3,5,7,10],d:[0,2,3,4,6],a:['','','','',''],alt:49,pad:[110,164.81,220,329.63]},
-{n:'A B C♯ E F♯',s:[0,2,4,7,9],d:[0,1,2,4,5],a:['','','♯','','♯'],alt:41.2,pad:[110,164.81,220,277.18]},
-{n:'A B♭ D E F',s:[0,1,5,7,8],d:[0,1,3,4,5],a:['','♭','','',''],alt:58.27,pad:[110,164.81,220,233.08]},
-{n:'A B C♯ D♯ F',s:[0,2,4,6,8],d:[0,1,2,3,5],a:['','','♯','♯',''],alt:61.74,pad:[110,138.59,174.61,220]}];
-let mood=0;
-function setMood(m){mood=m;document.querySelectorAll('.md').forEach(function(b){const on=+b.dataset.m===m;b.setAttribute('aria-pressed',on);b.style.background=on?'var(--bg-accent)':'';b.style.color=on?'var(--text-accent)':'';b.style.borderColor=on?'var(--border-accent)':'';});$('mn').textContent='Notes: '+MOODS[m].n;}
-document.querySelectorAll('.md').forEach(function(b){b.onclick=function(){setMood(+b.dataset.m);};});setMood(0);
+const MOODS=[{s:[0,3,5,7,10],d:[0,2,3,4,6],a:['','','','',''],alt:49,pad:[110,164.81,220,329.63]}],mood=0;
 const N=80,LN=[],SQ=[];for(let n=1;n<=N;n++){LN.push(Math.log(n));SQ.push(1/Math.sqrt(n));}
 const lnN=Math.log(N),rN=Math.sqrt(N),b=1/rN,TAU=2*Math.PI;
 function theta(t){return t/2*Math.log(t/TAU)-t/2-Math.PI/8+1/(48*t)+7/(5760*t*t*t);}
@@ -184,9 +175,9 @@ const kg=ac.createGain();kg.gain.value=0.85;kg.connect(cp);shS=ac.createWaveShap
 playing=true;idx=0;pos=5;step=0;bar=0;gstep=0;mel=0;mode='main';mbar=0;pending=false;drops=0;$('xd').textContent='0';T=ac.currentTime+0.1;queue=[];shown=[];cur=null;trail=[];lbl.textContent='Stop';}
 function stop(){playing=false;lbl.textContent='Play';const n=ac.currentTime;master.gain.setValueAtTime(master.gain.value,n);master.gain.linearRampToValueAtTime(0.0001,n+0.2);}
 btn.onclick=function(){if(playing)stop();else start();};
-const Y0=140,HS=5,PPS=150,yv=p=>Y0-p*HS,WIN=14;
+const Y0=152,HS=5,PPS=150,yv=p=>Y0-p*HS,WIN=22;
 function spiral(pn,now){
-sx2.clearRect(0,0,W2,H2);const ox=W2*0.42,oy=H2/2,sc=21,hot=vmode==='drop';
+sx2.clearRect(0,0,W2,H2);const ox=W2*0.42,oy=H2/2,sc=H2/11.5,hot=vmode==='drop';
 sx2.strokeStyle=GRY;sx2.lineWidth=1;sx2.globalAlpha=0.3;for(let r=1;r<=4;r++){sx2.beginPath();sx2.arc(ox,oy,r*sc,0,7);sx2.stroke();}sx2.globalAlpha=1;
 let head=null;
 if(cur&&playing){const ht=cur.z+(cur.z1-cur.z)*Math.max(0,Math.min(1,(now-cur.t)/cur.dur));
@@ -194,13 +185,13 @@ if(ht<lastT-1||!trail.length){trail=[];lastT=ht-0.03;}
 for(let t=lastT+0.03;t<=ht;t+=0.03){const z=zc(t);trail.push([z[0],z[1],t]);lastT=t;}
 while(trail.length&&trail[0][2]<ht-WIN)trail.shift();head=ht;}
 sx2.lineCap='round';sx2.strokeStyle=hot?RED:BLU;
-for(let i=1;i<trail.length;i++){const a=trail[i-1],c=trail[i],k=head?1-(head-c[2])/WIN:0.4;sx2.globalAlpha=Math.max(0.04,k);sx2.lineWidth=1+2*k;sx2.beginPath();sx2.moveTo(ox+a[0]*sc,oy-a[1]*sc);sx2.lineTo(ox+c[0]*sc,oy-c[1]*sc);sx2.stroke();}
+for(let i=1;i<trail.length;i++){const a=trail[i-1],c=trail[i],k=head?1-(head-c[2])/WIN:0.4;sx2.globalAlpha=Math.max(0.04,k);sx2.lineWidth=1.2+2.6*k;sx2.beginPath();sx2.moveTo(ox+a[0]*sc,oy-a[1]*sc);sx2.lineTo(ox+c[0]*sc,oy-c[1]*sc);sx2.stroke();}
 sx2.globalAlpha=1;
-const za=(pn-zeroAt)/350;if(za<1){sx2.globalAlpha=1-za;sx2.strokeStyle=AMB;sx2.lineWidth=3;sx2.beginPath();sx2.arc(ox,oy,6+za*34,0,7);sx2.stroke();sx2.globalAlpha=1;}
+const za=(pn-zeroAt)/350;if(za<1){sx2.globalAlpha=1-za;sx2.strokeStyle=AMB;sx2.lineWidth=3;sx2.beginPath();sx2.arc(ox,oy,8+za*sc*2.2,0,7);sx2.stroke();sx2.globalAlpha=1;}
 sx2.beginPath();sx2.arc(ox,oy,4,0,7);sx2.fillStyle=AMB;sx2.fill();
 if(trail.length){const h=trail[trail.length-1];sx2.beginPath();sx2.arc(ox+h[0]*sc,oy-h[1]*sc,4.5,0,7);sx2.fillStyle=ink;sx2.fill();}
-sx2.fillStyle=GRY;sx2.font='400 12px '+ff;sx2.textAlign='left';sx2.textBaseline='top';sx2.fillText(head?'Height '+head.toFixed(1):'The spiral',4,4);
-if(cur&&cur.pk>P92&&playing){sx2.fillStyle=RED;sx2.font='600 13px '+ff;sx2.textBaseline='bottom';sx2.fillText('Big loop',4,H2-4);}}
+sx2.fillStyle=GRY;sx2.font='400 14px '+ff;sx2.textAlign='left';sx2.textBaseline='top';sx2.fillText(head?'Height '+head.toFixed(1):'Press play',6,6);
+if(cur&&cur.pk>P92&&playing){sx2.fillStyle=RED;sx2.font='600 16px '+ff;sx2.textBaseline='bottom';sx2.fillText('Big loop',6,H2-6);}}
 function frame(){
 const pn=performance.now(),now=ac?ac.currentTime:0;
 if(playing){schedule();queue.sort(function(x,y){return x.t-y.t;});
