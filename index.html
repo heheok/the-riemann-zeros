@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zeta Zeros (Critical Line Mix)</title>
+<meta name="description" content="The first 282 zeros of the Riemann zeta function, played as techno. Every note is a real zero. The maths decides when the drop hits.">
+<meta property="og:title" content="Zeta Zeros (Critical Line Mix)">
+<meta property="og:description" content="The Riemann zeros, played as techno. Every note is a real zero. The maths decides when the drop hits.">
+<style>
+:root{
+  --bg:#0d0d0f;--panel:#17171b;--line:#2a2a31;
+  --text-primary:#f1efe8;--text-secondary:#a8a69d;
+  --accent:#ef9f27;--blue:#378add;--red:#e24b4a;
+  --bg-neutral:#17171b;--bg-accent:#3a2a0c;--text-accent:#f6c66f;--border-accent:#ef9f27;--text-danger:#ff7b7a;
+  --radius:10px;--font-voice:Georgia,"Times New Roman",serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text-primary);font-family:var(--sans);line-height:1.6}
+main{max-width:760px;margin:0 auto;padding:40px 20px 64px}
+h1{font-family:var(--font-voice);font-weight:400;font-size:clamp(34px,7vw,56px);line-height:1.05;margin:0 0 6px;letter-spacing:-0.01em}
+h1 span{color:var(--accent)}
+.sub{font-size:18px;color:var(--text-secondary);margin:0 0 28px;max-width:56ch}
+.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+h2{font-family:var(--font-voice);font-weight:400;font-size:24px;margin:44px 0 10px}
+p,li{color:var(--text-secondary);font-size:16px}
+li{margin:6px 0}
+b{color:var(--text-primary);font-weight:600}
+button{font:inherit;font-size:14px;color:var(--text-primary);background:transparent;border:1px solid #4a4a54;border-radius:var(--radius);padding:8px 14px;cursor:pointer}
+button:hover{background:#1e1e24}
+button:active{transform:scale(.98)}
+#xp{background:var(--accent);border-color:var(--accent);color:#1b1203;font-weight:600;padding:10px 22px;font-size:16px}
+#xp:hover{background:#f6b144}
+.player{background:#111114;border:1px solid var(--line);border-radius:16px;padding:16px}
+.row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:0 0 12px}
+.stat{font-size:20px;font-weight:600}
+.lab{font-size:13px;color:var(--text-secondary)}
+.grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:12px;margin-bottom:10px}
+@media (max-width:640px){.grid{grid-template-columns:minmax(0,1fr)}}
+.formulas{background:var(--bg-neutral);border-radius:var(--radius);padding:12px 14px;font-size:12px;color:var(--text-secondary);display:flex;flex-direction:column;gap:9px;min-width:0}
+.f{font-family:var(--font-voice);font-size:15px;color:var(--text-primary);margin-top:2px}
+canvas{display:block}
+.note{font-size:14px;border-top:1px solid var(--line);margin-top:44px;padding-top:18px}
+a{color:var(--text-accent)}
+</style>
+</head>
+<body>
+<main>
+  <p class="kicker">A number theory rave</p>
+  <h1>Zeta Zeros <span>(Critical Line Mix)</span></h1>
+  <p class="sub">The first 282 zeros of the Riemann zeta function, played as techno. Every note is a real zero. The maths decides when the drop hits.</p>
+
+  <div class="player">
+    <div class="row">
+      <button id="xp"><span id="xpl">Play</span></button>
+      <div><span id="xb" class="stat">–</span> <span class="lab">bpm</span></div>
+      <div><span class="lab">Drops</span> <span id="xd" class="stat" style="margin-left:4px;">0</span></div>
+      <span id="xm" style="font-size:16px;font-weight:600;"></span>
+    </div>
+    <div class="row" style="gap:8px;">
+      <span class="lab" style="font-size:14px;margin-right:4px;">Mood</span>
+      <button class="md" data-m="0" aria-pressed="true">Dark</button>
+      <button class="md" data-m="1" aria-pressed="false">Bright</button>
+      <button class="md" data-m="2" aria-pressed="false">Evil</button>
+      <button class="md" data-m="3" aria-pressed="false">Spacey</button>
+      <span id="mn" class="lab" style="margin-left:4px;"></span>
+    </div>
+    <div class="grid">
+      <div id="sw" style="min-width:0;"><canvas id="sc" role="img" aria-label="Zeta spiral whose curve passes through the centre each time a note plays">The zeta spiral, hitting the centre on every note.</canvas></div>
+      <div class="formulas">
+        <div>The machine<div class="f"><i>ζ</i>(<i>s</i>) = Σ 1/<i>n</i><sup><i>s</i></sup> = ∏ 1/(1 − <i>p</i><sup>−<i>s</i></sup>)</div></div>
+        <div>Zero now playing<div class="f"><i>ρ</i><sub id="fn">n</sub> = ½ + <i>i</i> · <span id="fg">γ</span></div></div>
+        <div>Gap sets the melody step<div class="f"><i>δ</i> = Δ<i>γ</i> · ln(<i>γ</i>/2π) / 2π = <span id="fd">–</span></div><div id="fs" style="margin-top:2px;">–</div></div>
+        <div>Loop size arms the drop<div class="f">max |<i>ζ</i>(½ + <i>it</i>)| = <span id="fp">–</span></div><div id="ft" style="margin-top:2px;">–</div></div>
+      </div>
+    </div>
+    <div id="xw" style="width:100%;"><canvas id="xc" role="img" aria-label="Scrolling sheet music of the lead line, one note per zeta zero">Sheet music scrolling right to left, one note per zero.</canvas></div>
+  </div>
+
+  <h2>What am I looking at?</h2>
+  <ul>
+    <li><b>The spiral</b> is the Riemann zeta function traced along its critical line. Each time the curve passes through the centre, the function equals zero. Those points are the famous zeros.</li>
+    <li><b>Each lead note is one zero</b>, in order, starting with the first at height 14.1347. They are computed live in your browser.</li>
+    <li><b>The melody</b> follows the gaps between zeros. A longer wait than average steps the tune up and holds the note; a shorter wait steps it down and makes it quick.</li>
+    <li><b>The drops</b> are triggered when the curve swings unusually far from the centre between two zeros. Watch for "Big loop" on the spiral: the build-up follows.</li>
+    <li><b>Mood</b> changes the scale the melody lands on. The zeros, the rhythm and the drops stay exactly the same.</li>
+  </ul>
+
+  <h2>Why zeros?</h2>
+  <p>The zeros of the zeta function encode how the prime numbers are distributed. The Riemann hypothesis, posed in 1859, says every one of these zeros sits on a single line. This page walks up that line and plays what it finds.</p>
+
+  <p class="note">This is a sonification of the zeros, not a proof of anything and not affiliated with any claimed proof. The zeros and their spacing are real mathematics. The scale, drums, tempo and the rule that turns a gap into a note are artistic choices. Zeros are computed with the Euler–Maclaurin and Riemann–Siegel formulas. Made in a conversation with Claude.</p>
+</main>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const cv=$('xc'),ctx=cv.getContext('2d'),s2=$('sc'),sx2=s2.getContext('2d'),btn=$('xp'),lbl=$('xpl');
+const cs=getComputedStyle(document.body),ink=cs.color,ff=cs.fontFamily,AMB='#EF9F27',RED='#E24B4A',BLU='#378ADD',GRY='#888780';
+let W=680,W2=340;const H=200,H2=236;
+function fit(c,w,h){const d=window.devicePixelRatio||1;c.width=w*d;c.height=h*d;c.style.width=w+'px';c.style.height=h+'px';c.getContext('2d').setTransform(d,0,0,d,0,0);}
+function size(){W=$('xw').clientWidth||680;W2=$('sw').clientWidth||340;fit(cv,W,H);fit(s2,W2,H2);}
+size();window.addEventListener('resize',size);
+const MOODS=[
+{n:'A C D E G',s:[0,3,5,7,10],d:[0,2,3,4,6],a:['','','','',''],alt:49,pad:[110,164.81,220,329.63]},
+{n:'A B C♯ E F♯',s:[0,2,4,7,9],d:[0,1,2,4,5],a:['','','♯','','♯'],alt:41.2,pad:[110,164.81,220,277.18]},
+{n:'A B♭ D E F',s:[0,1,5,7,8],d:[0,1,3,4,5],a:['','♭','','',''],alt:58.27,pad:[110,164.81,220,233.08]},
+{n:'A B C♯ D♯ F',s:[0,2,4,6,8],d:[0,1,2,3,5],a:['','','♯','♯',''],alt:61.74,pad:[110,138.59,174.61,220]}];
+let mood=0;
+function setMood(m){mood=m;document.querySelectorAll('.md').forEach(function(b){const on=+b.dataset.m===m;b.setAttribute('aria-pressed',on);b.style.background=on?'var(--bg-accent)':'';b.style.color=on?'var(--text-accent)':'';b.style.borderColor=on?'var(--border-accent)':'';});$('mn').textContent='Notes: '+MOODS[m].n;}
+document.querySelectorAll('.md').forEach(function(b){b.onclick=function(){setMood(+b.dataset.m);};});setMood(0);
+const N=80,LN=[],SQ=[];for(let n=1;n<=N;n++){LN.push(Math.log(n));SQ.push(1/Math.sqrt(n));}
+const lnN=Math.log(N),rN=Math.sqrt(N),b=1/rN,TAU=2*Math.PI;
+function theta(t){return t/2*Math.log(t/TAU)-t/2-Math.PI/8+1/(48*t)+7/(5760*t*t*t);}
+function Z(t){if(t>=200){const th=theta(t),u=Math.sqrt(t/TAU),M=Math.floor(u);let p=u-M,z=0;for(let n=1;n<=M;n++)z+=SQ[n-1]*Math.cos(th-t*LN[n-1]);z*=2;let cd=Math.cos(TAU*p);if(Math.abs(cd)<1e-7){p+=1e-6;cd=Math.cos(TAU*p);}return z+((M%2)?1:-1)*Math.pow(t/TAU,-0.25)*Math.cos(TAU*(p*p-p-1/16))/cd;}
+let re=0,im=0;for(let k=0;k<N-1;k++){const th=t*LN[k];re+=SQ[k]*Math.cos(th);im-=SQ[k]*Math.sin(th);}
+const th=t*lnN,c=Math.cos(th),s=Math.sin(th),ar=rN*c,ai=-rN*s,den=0.25+t*t;
+re+=(-0.5*ar+ai*t)/den;im+=(-0.5*ai-ar*t)/den;re+=0.5*b*c;im-=0.5*b*s;const q=b/N/12;re+=q*(0.5*c+t*s);im+=q*(t*c-0.5*s);
+const h=theta(t);return re*Math.cos(h)-im*Math.sin(h);}
+function zc(t){const z=Z(t),h=theta(t);return [z*Math.cos(h),-z*Math.sin(h)];}
+const zeros=[];(function(){let a=10,za=Z(a);for(let t=10.05;t<520;t+=0.05){const zb=Z(t);if((za<0)!==(zb<0)){let lo=a,hi=t,zl=za;for(let i=0;i<30;i++){const m=(lo+hi)/2,zm=Z(m);if((zm<0)===(zl<0)){lo=m;zl=zm;}else hi=m;}zeros.push((lo+hi)/2);}a=t;za=zb;}})();
+const NZ=zeros.length-1,peak=[];for(let i=0;i<NZ;i++){let m=0;for(let k=1;k<=6;k++){const v=Math.abs(Z(zeros[i]+(zeros[i+1]-zeros[i])*k/7));if(v>m)m=v;}peak.push(m);}
+const P92=peak.slice().sort(function(x,y){return x-y;})[Math.floor(NZ*0.92)];
+const freq=d=>220*Math.pow(2,(MOODS[mood].s[d%5]+12*Math.floor(d/5))/12),sp=d=>-4+MOODS[mood].d[d%5]+7*Math.floor(d/5);
+let ac=null,master=null,duck=null,drums=null,rv=null,nbuf=null,shS=null,shH=null;
+let playing=false,idx=0,pos=5,T=0,step=0,bar=0,gstep=0,mel=0,mode='main',mbar=0,pending=false,drops=0,queue=[],shown=[],kickAt=-1e9,flashAt=-1e9,zeroAt=-1e9,vmode='',cur=null,trail=[],lastT=0;
+function curve(k){const c=new Float32Array(1024);for(let i=0;i<1024;i++){const x=i/511.5-1;c[i]=Math.tanh(x*k)/Math.tanh(k);}return c;}
+function nz(t,type,f,v,dec,q,send){const s=ac.createBufferSource(),fl=ac.createBiquadFilter(),g=ac.createGain();s.buffer=nbuf;fl.type=type;fl.frequency.value=f;if(q)fl.Q.value=q;g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(0.001,t+dec);s.connect(fl);fl.connect(g);g.connect(drums);if(send)g.connect(rv);s.start(t,Math.random()*0.5);s.stop(t+dec+0.02);}
+function kick(t,hard,E){const o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(hard?260:210,t);o.frequency.exponentialRampToValueAtTime(58,t+0.045);o.frequency.exponentialRampToValueAtTime(41,t+0.3);g.gain.setValueAtTime(1,t);g.gain.setValueAtTime(1,t+0.03);g.gain.exponentialRampToValueAtTime(0.001,t+(hard?0.36:0.28));o.connect(g);g.connect(hard?shH:shS);o.start(t);o.stop(t+0.4);nz(t,'highpass',3500,0.22,0.012);
+duck.gain.cancelScheduledValues(t);duck.gain.setValueAtTime(0.25,t);duck.gain.linearRampToValueAtTime(1,t+E*3);queue.push({t:t,k:1});}
+const HF=[205.3,304.4,369.6,522.7,540,800];
+function hat(t,v,dec){const bp=ac.createBiquadFilter(),hp=ac.createBiquadFilter(),g=ac.createGain();bp.type='bandpass';bp.frequency.value=10000;bp.Q.value=0.7;hp.type='highpass';hp.frequency.value=7000;g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(0.001,t+dec);
+HF.forEach(function(f){const o=ac.createOscillator();o.type='square';o.frequency.value=f*1.48;o.connect(bp);o.start(t);o.stop(t+dec+0.02);});bp.connect(hp);hp.connect(g);g.connect(drums);}
+function clap(t,v){[0,0.011,0.023].forEach(function(dt){nz(t+dt,'bandpass',1300,v,0.022,1.4);});nz(t+0.03,'bandpass',1200,v*0.8,0.2,1.2,true);}
+function lead(f,t,dur,cut){const fl=ac.createBiquadFilter(),g=ac.createGain();fl.type='lowpass';fl.Q.value=9;fl.frequency.setValueAtTime(cut*2.5,t);fl.frequency.exponentialRampToValueAtTime(cut,t+0.09);
+[0,9].forEach(function(dt){const o=ac.createOscillator();o.type='sawtooth';o.frequency.value=f;o.detune.value=dt;o.connect(fl);o.start(t);o.stop(t+dur+0.05);});
+g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(0.11,t+0.005);g.gain.exponentialRampToValueAtTime(0.001,t+dur+0.04);fl.connect(g);g.connect(duck);}
+function bassn(f,t,dur){const g=ac.createGain(),fl=ac.createBiquadFilter();fl.type='lowpass';fl.frequency.value=300;fl.Q.value=2;[['sine',1],['sawtooth',0.5]].forEach(function(w){const o=ac.createOscillator(),og=ac.createGain();o.type=w[0];o.frequency.value=f;og.gain.value=w[1];o.connect(og);og.connect(fl);o.start(t);o.stop(t+dur+0.02);});g.gain.setValueAtTime(0.36,t);g.gain.exponentialRampToValueAtTime(0.001,t+dur);fl.connect(g);g.connect(duck);}
+function riser(t,len){const s=ac.createBufferSource(),fl=ac.createBiquadFilter(),g=ac.createGain();s.buffer=nbuf;s.loop=true;fl.type='bandpass';fl.Q.value=2.5;fl.frequency.setValueAtTime(300,t);fl.frequency.exponentialRampToValueAtTime(9500,t+len);g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(0.2,t+len);g.gain.linearRampToValueAtTime(0.0001,t+len+0.03);s.connect(fl);fl.connect(g);g.connect(drums);s.start(t);s.stop(t+len+0.05);}
+function padc(t,len,v){MOODS[mood].pad.forEach(function(f){const o=ac.createOscillator(),g=ac.createGain(),fl=ac.createBiquadFilter();o.type='sawtooth';o.frequency.value=f;o.detune.value=(Math.random()-0.5)*14;fl.type='lowpass';fl.frequency.value=900;g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(v,t+0.25);g.gain.linearRampToValueAtTime(0.0001,t+len);o.connect(fl);fl.connect(g);g.connect(duck);g.connect(rv);o.start(t);o.stop(t+len+0.05);});}
+function impact(t){const o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(90,t);o.frequency.exponentialRampToValueAtTime(30,t+0.9);g.gain.setValueAtTime(0.9,t);g.gain.exponentialRampToValueAtTime(0.001,t+1.1);o.connect(g);g.connect(shS);o.start(t);o.stop(t+1.2);nz(t,'highpass',4500,0.26,2,0,true);}
+function tempo(){if(mode==='build')return 0.1-0.012*(mbar*16+step)/64;if(mode==='drop')return 0.088;if(mode==='down')return 0.088+0.012*(mbar*16+step)/32;return 0.1;}
+const NAME={main:'Groove',build:'Build-up',drop:'Drop',down:'Comedown'};
+function schedule(){while(T<ac.currentTime+0.25){
+if(step===0){if(mode==='main'&&((pending&&mbar>=4)||mbar>=10)){mode='build';mbar=0;pending=false;riser(T,5.6);}
+else if(mode==='build'&&mbar>=4){mode='drop';mbar=0;drops++;nz(T,'highpass',4500,0.3,1.8,0,true);queue.push({t:T,d:1,n:drops});}
+else if(mode==='drop'&&mbar>=8){mode='down';mbar=0;impact(T);padc(T,3.2,0.05);}
+else if(mode==='down'&&mbar>=2){mode='main';mbar=0;}
+queue.push({t:T,bar:1});if(mode==='build')padc(T,1.6,0.035);}
+const E=tempo(),root=(bar%4===3)?MOODS[mood].alt:55;if(step%4===0)queue.push({t:T,sec:mode,e:E});
+const quiet=mode==='build'&&mbar===3&&step>=12;
+if(mode==='main'){if(step%4===0)kick(T,false,E);if(step%4===2){hat(T,0.13,0.09);bassn(root,T,E*1.7);}else if(step%2===1)hat(T,0.04,0.03);if((step===4||step===12)&&mbar>=1)clap(T,0.3);}
+else if(mode==='drop'){if(step%4===0)kick(T,true,E);else bassn(root*(step%4===3?2:1),T,E*0.9);if(step%4===2)hat(T,0.15,0.1);else hat(T,0.07,0.03);if(step===4||step===12)clap(T,0.38);}
+else if(mode==='build'&&!quiet){const pr=(mbar*16+step)/64;if(mbar<2&&step%4===2)hat(T,0.08,0.05);if(mbar===2&&step%2===0)nz(T,'highpass',1300,0.1+0.14*pr,0.07);if(mbar===3)nz(T,'highpass',1300,0.12+0.24*pr,0.05);}
+else if(mode==='down'){if(step%4===2)hat(T,0.05,0.06);if(mbar===1&&step===8)riser(T,E*8);if(mbar===1&&(step===12||step===14||step===15))nz(T,'highpass',1300,0.22,0.06);}
+if(gstep>=mel){const g0=zeros[idx],g1=zeros[idx+1],dl=(g1-g0)*Math.log(g0/TAU)/TAU,sd=Math.max(-3,Math.min(3,Math.round((dl-1)*4)));
+pos+=sd;if(pos<0)pos=-pos;if(pos>12)pos=24-pos;const len=dl<0.75?1:dl<1.35?2:4;
+if(!quiet){const pr=mode==='build'?(mbar*16+step)/64:(mbar*16+step)/32,cut=mode==='drop'?3600:mode==='main'?1300:mode==='build'?300+2600*pr:2400-1900*pr;
+lead(mode==='drop'?freq(pos):freq(pos)/2,T,len*E*0.9,cut);}
+queue.push({t:T,p:pos,spv:sp(pos),acc:MOODS[mood].a[pos%5],len:len,dur:len*E,z:g0,z1:g1,n:idx+1,dl:dl,sd:sd,pk:peak[idx],q:quiet});
+if(mode==='main'&&peak[idx]>P92)pending=true;mel=gstep+len;idx++;if(idx>=NZ)idx=0;}
+T+=E;step++;gstep++;if(step>=16){step=0;bar++;mbar++;}}}
+function start(){try{const AC=window.AudioContext||window.webkitAudioContext;if(!ac)ac=new AC();if(ac.state==='suspended')ac.resume();}catch(e){ac=null;}
+if(!ac){$('xm').textContent='Sound is blocked in this browser';return;}
+const sr=ac.sampleRate;if(!nbuf){nbuf=ac.createBuffer(1,sr,sr);const d=nbuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;}
+master=ac.createGain();master.gain.value=0.55;const cp=ac.createDynamicsCompressor();cp.threshold.value=-14;cp.ratio.value=6;cp.connect(master);master.connect(ac.destination);
+const ir=ac.createBuffer(2,Math.floor(sr*2.2),sr);for(let c=0;c<2;c++){const d=ir.getChannelData(c);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,3);}
+rv=ac.createConvolver();rv.buffer=ir;const wet=ac.createGain();wet.gain.value=0.22;rv.connect(wet);wet.connect(cp);
+duck=ac.createGain();duck.connect(cp);drums=ac.createGain();drums.connect(cp);
+const kg=ac.createGain();kg.gain.value=0.85;kg.connect(cp);shS=ac.createWaveShaper();shS.curve=curve(3);shS.connect(kg);shH=ac.createWaveShaper();shH.curve=curve(9);shH.connect(kg);
+playing=true;idx=0;pos=5;step=0;bar=0;gstep=0;mel=0;mode='main';mbar=0;pending=false;drops=0;$('xd').textContent='0';T=ac.currentTime+0.1;queue=[];shown=[];cur=null;trail=[];lbl.textContent='Stop';}
+function stop(){playing=false;lbl.textContent='Play';const n=ac.currentTime;master.gain.setValueAtTime(master.gain.value,n);master.gain.linearRampToValueAtTime(0.0001,n+0.2);}
+btn.onclick=function(){if(playing)stop();else start();};
+const Y0=140,HS=5,PPS=150,yv=p=>Y0-p*HS,WIN=14;
+function spiral(pn,now){
+sx2.clearRect(0,0,W2,H2);const ox=W2*0.42,oy=H2/2,sc=21,hot=vmode==='drop';
+sx2.strokeStyle=GRY;sx2.lineWidth=1;sx2.globalAlpha=0.3;for(let r=1;r<=4;r++){sx2.beginPath();sx2.arc(ox,oy,r*sc,0,7);sx2.stroke();}sx2.globalAlpha=1;
+let head=null;
+if(cur&&playing){const ht=cur.z+(cur.z1-cur.z)*Math.max(0,Math.min(1,(now-cur.t)/cur.dur));
+if(ht<lastT-1||!trail.length){trail=[];lastT=ht-0.03;}
+for(let t=lastT+0.03;t<=ht;t+=0.03){const z=zc(t);trail.push([z[0],z[1],t]);lastT=t;}
+while(trail.length&&trail[0][2]<ht-WIN)trail.shift();head=ht;}
+sx2.lineCap='round';sx2.strokeStyle=hot?RED:BLU;
+for(let i=1;i<trail.length;i++){const a=trail[i-1],c=trail[i],k=head?1-(head-c[2])/WIN:0.4;sx2.globalAlpha=Math.max(0.04,k);sx2.lineWidth=1+2*k;sx2.beginPath();sx2.moveTo(ox+a[0]*sc,oy-a[1]*sc);sx2.lineTo(ox+c[0]*sc,oy-c[1]*sc);sx2.stroke();}
+sx2.globalAlpha=1;
+const za=(pn-zeroAt)/350;if(za<1){sx2.globalAlpha=1-za;sx2.strokeStyle=AMB;sx2.lineWidth=3;sx2.beginPath();sx2.arc(ox,oy,6+za*34,0,7);sx2.stroke();sx2.globalAlpha=1;}
+sx2.beginPath();sx2.arc(ox,oy,4,0,7);sx2.fillStyle=AMB;sx2.fill();
+if(trail.length){const h=trail[trail.length-1];sx2.beginPath();sx2.arc(ox+h[0]*sc,oy-h[1]*sc,4.5,0,7);sx2.fillStyle=ink;sx2.fill();}
+sx2.fillStyle=GRY;sx2.font='400 12px '+ff;sx2.textAlign='left';sx2.textBaseline='top';sx2.fillText(head?'Height '+head.toFixed(1):'The spiral',4,4);
+if(cur&&cur.pk>P92&&playing){sx2.fillStyle=RED;sx2.font='600 13px '+ff;sx2.textBaseline='bottom';sx2.fillText('Big loop',4,H2-4);}}
+function frame(){
+const pn=performance.now(),now=ac?ac.currentTime:0;
+if(playing){schedule();queue.sort(function(x,y){return x.t-y.t;});
+while(queue.length&&queue[0].t<=now){const e=queue.shift();
+if(e.k){kickAt=pn;continue;}
+if(e.sec){vmode=e.sec;$('xm').textContent=NAME[e.sec];$('xb').textContent=Math.round(15/e.e);continue;}
+if(e.d){flashAt=pn;$('xd').textContent=e.n;}
+if(e.z){cur=e;zeroAt=pn;$('fn').textContent=e.n;$('fg').textContent=e.z.toFixed(4);$('fd').textContent=e.dl.toFixed(2);$('fs').textContent=(e.dl>1?'Wider than average':'Tighter than average')+', step '+(e.sd>0?'+':'')+e.sd;$('fp').textContent=e.pk.toFixed(2);const armed=e.pk>P92;$('ft').textContent=armed?'Above '+P92.toFixed(2)+', drop armed':'Needs '+P92.toFixed(2)+' to arm a drop';$('ft').style.color=armed?'var(--text-danger)':'';}
+e.w=pn;shown.push(e);if(shown.length>200)shown.shift();}}
+spiral(pn,now);
+ctx.clearRect(0,0,W,H);
+const fa=(pn-flashAt)/600;if(fa<1){ctx.globalAlpha=0.5*(1-fa);ctx.fillStyle=AMB;ctx.fillRect(0,0,W,H);ctx.globalAlpha=1;}
+const xr=W-24,hot=vmode==='drop';
+ctx.strokeStyle=ink;ctx.globalAlpha=0.55;ctx.lineWidth=1;for(let l=0;l<5;l++){ctx.beginPath();ctx.moveTo(0,yv(l*2));ctx.lineTo(W,yv(l*2));ctx.stroke();}ctx.globalAlpha=1;
+const ka=(pn-kickAt)/200,kk=ka<1?1-ka:0;ctx.beginPath();ctx.arc(22,22,8+8*kk,0,7);ctx.fillStyle=hot?RED:GRY;ctx.globalAlpha=0.3+0.7*kk;ctx.fill();ctx.globalAlpha=1;
+ctx.fillStyle=GRY;ctx.font='400 12px '+ff;ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText('Kick',42,22);
+for(const e of shown){const x=xr-(now-e.t)*PPS;if(x<-30)continue;
+if(e.bar){ctx.strokeStyle=ink;ctx.globalAlpha=0.55;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x-11,yv(0));ctx.lineTo(x-11,yv(8));ctx.stroke();ctx.globalAlpha=1;continue;}
+if(e.d){ctx.fillStyle=RED;ctx.font='600 14px '+ff;ctx.textAlign='left';ctx.textBaseline='bottom';ctx.fillText('Drop',x-6,yv(13)-14);continue;}
+if(e.p===undefined)continue;
+const p=e.spv,y=yv(p),age=(pn-e.w)/350,col=age<1?AMB:ink;ctx.globalAlpha=e.q?0.25:1;
+ctx.strokeStyle=ink;ctx.lineWidth=1;for(let l=-2;l>=p;l-=2){ctx.beginPath();ctx.moveTo(x-10,yv(l));ctx.lineTo(x+10,yv(l));ctx.stroke();}for(let l=10;l<=p;l+=2){ctx.beginPath();ctx.moveTo(x-10,yv(l));ctx.lineTo(x+10,yv(l));ctx.stroke();}
+ctx.save();ctx.translate(x,y);ctx.rotate(-0.35);ctx.beginPath();ctx.ellipse(0,0,6,4.2,0,0,7);ctx.fillStyle=col;ctx.fill();ctx.restore();
+if(e.acc){ctx.fillStyle=col;ctx.font='400 13px '+ff;ctx.textAlign='right';ctx.textBaseline='middle';ctx.fillText(e.acc,x-7,y);}
+const up=p<4,sx=up?x+5.3:x-5.3,sy=up?y-30:y+30;ctx.strokeStyle=col;ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(sx,y);ctx.lineTo(sx,sy);ctx.stroke();
+const nf=e.len===1?2:e.len===2?1:0;for(let f=0;f<nf;f++){const fy=sy+(up?1:-1)*f*6;ctx.beginPath();ctx.moveTo(sx,fy);ctx.lineTo(sx+8,fy+(up?8:-8));ctx.lineWidth=2;ctx.stroke();}
+ctx.globalAlpha=1;}
+requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
