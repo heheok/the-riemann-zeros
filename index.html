@@ -86,7 +86,7 @@ canvas{display:block}
     </section>
     <section>
       <h2>Where the drops come from</h2>
-      <p>Between two zeros the curve wanders off and comes back. Usually that's a small loop. Once in a while it swings way out. When that happens you'll see "Big loop" appear, and a bit later the kick drum cuts out, the tension builds for four bars, and the drop hits. We didn't pick when that happens. The function did.</p>
+      <p>Between two zeros the curve wanders off and comes back. Usually that's a small loop. Once in a while it swings way out. When that happens you'll see "Big loop" appear, and a bit later the kick drum cuts out, the tension builds for four bars, and the drop hits. We didn't pick when that happens. The function did. (The very first drop is the one exception. It comes early on purpose, so you don't have to wait for it.)</p>
       <p>Each drop also plays the tune a little differently, so no two sound the same. The first is plain. Then it bounces between octaves, then picks up a harmony, then stutters, then flips upside down, and round again.</p>
     </section>
     <section>
@@ -147,7 +147,7 @@ function impact(t){const o=ac.createOscillator(),g=ac.createGain();o.frequency.s
 function tempo(){if(mode==='build')return 0.1-0.012*(mbar*16+step)/64;if(mode==='drop')return 0.088;if(mode==='down')return 0.088+0.012*(mbar*16+step)/32;return 0.1;}
 const NAME={main:'Groove',build:'Build-up',drop:'Drop',down:'Comedown'};
 function schedule(){while(T<ac.currentTime+0.25){
-if(step===0){if(mode==='main'&&((pending&&mbar>=4)||mbar>=14)){mode='build';mbar=0;pending=false;riser(T,5.6);}
+if(step===0){if(mode==='main'&&((pending&&mbar>=4)||mbar>=14||(drops===0&&mbar>=3))){mode='build';mbar=0;pending=false;riser(T,5.6);}
 else if(mode==='build'&&mbar>=4){mode='drop';mbar=0;drops++;variant=(drops-1)%5;nz(T,'highpass',4500,0.3,1.8,0,true);queue.push({t:T,d:1,n:drops,v:variant});}
 else if(mode==='drop'&&mbar>=8){mode='down';mbar=0;impact(T);padc(T,3.2,0.05);}
 else if(mode==='down'&&mbar>=2){mode='main';mbar=0;}
